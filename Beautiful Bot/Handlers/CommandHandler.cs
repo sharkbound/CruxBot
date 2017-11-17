@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Discord;
 using Discord.WebSocket;
-using Discord.Commands;
 using BotTools.Utils;
 using BotTools.Interfaces;
 using System.Reflection;
@@ -74,14 +71,16 @@ namespace BotTools.Handlers
 
                 if (!CommandExist(cmdName, out IDiscordCommand command))
                 {
-                    await userMsg.Channel.SendMessageAsync($"{cmdName} is not a valid command");
-                    return false;
+                        await userMsg.Channel.SendMessageAsync($"`{cmdName}` is not a valid command");
+
+                        return false;
                 }
                 else if (!userMsg.Author.HasPermission(command.Permission.ToLower().Trim()))
                 {
-                    Logger.LogWarning($"denied permission for {prefix}{cmdName} for user {userMsg.Author.Username}");
-                    await userMsg.Channel.SendMessageAsync($"You do not have permission to use {prefix}{cmdName}");
-                    return false;
+                        Logger.LogWarning($"denied permission for {prefix}{cmdName} for user {userMsg.Author.Username}");
+                        await userMsg.Channel.SendMessageAsync($"You do not have permission to use: `{prefix}{cmdName}`");
+
+                        return false;
                 }
 
                 Events.TriggerOnCommandExecuted(userMsg, userMsg.Author, cmdName, parameters);

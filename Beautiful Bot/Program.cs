@@ -1,13 +1,14 @@
 ﻿using BotTools;
 using BotTools.Handlers;
-using Config.Json;
+using JsonConfig;
 using Discord;
-using Discord.Commands;
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
+using Crux.Config;
+using BotTools.Utils;
+using Crux.Commands;
 
 namespace Beautiful_Bot
 {
@@ -23,11 +24,7 @@ namespace Beautiful_Bot
             new Program().MainAsync().GetAwaiter().GetResult();
         }
 
-        class CLV
-        {
-            static string class_level;
-        }
-
+        internal static CommandHandler handler;
         internal static DiscordSocketClient client;
         internal static CancellationTokenSource cancelSrc = new CancellationTokenSource();
 
@@ -36,19 +33,41 @@ namespace Beautiful_Bot
             Permissions.Load();
 
             client = new DiscordSocketClient();
-            CommandHandler handler = new CommandHandler(client, ";;");
+
+            handler = new CommandHandler(client, ";;");
 
             await client.SetGameAsync(";;help");
 
-            var token = "MzY2NTY2NzUzNDk4ODI0NzA1.DLuvqg.kkIzlN7uPy8lRoMkcgG2kkCu-jM";
 
-
-            await client.LoginAsync(TokenType.Bot, token);
+            await client.LoginAsync(TokenType.Bot, Config.token);
             await client.StartAsync();
+
+            client.MessageReceived += async msg =>
+            {
+                try
+                {
+                    if (msg.Author.Id == client.CurrentUser.Id)
+                        Events.TriggerOnBotSendMessage(msg.Content);
+
+                    if (!await handler.HandleCommandAsync(msg))
+                    {
+                        //message was not a command
+                        Console.WriteLine($"{msg.Author.Username}: {msg.Content}");
+                        Logger.LogChat(msg.Author.Username, msg.Content);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($"An error occured: {ex.Message}\n\n{ex.StackTrace}");
+                }
+            };
+
+            client.MessageReceived += BadWordFilter.BadwordFilter.OnChat;
 
             await Task.Delay(-1, cancelSrc.Token);
         }
+        
 
-        internal static JsonConfig<Config> Configuration = new JsonConfig<Config>("Employment List");
+        internal static JsonConfig<Config1> Configuration = new JsonConfig<Config1>("Employment List");
     }
 }   

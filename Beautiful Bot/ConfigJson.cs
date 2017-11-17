@@ -4,7 +4,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace Config.Json
+namespace JsonConfig
 {
     class JsonConfig<T> where T : class, IJsonConfig, new()
     {
