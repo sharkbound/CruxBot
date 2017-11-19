@@ -66,7 +66,7 @@ namespace Crux.Commands
 
     class Test : IDiscordCommand
     {
-        public string Name => "test";
+        public string Name => "T";
 
         public string Help => "";
 
@@ -76,20 +76,7 @@ namespace Crux.Commands
 
         public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-
-            await Task.Run(async () =>
-            {
-                var sentMsg = await msg.Channel.SendMessageAsync("Approved!");
-
-                await msg.Author.GetOrCreateDMChannelAsync();
-
-                var sentMsgDM = await msg.Channel.SendMessageAsync("Approved!");
-
-                await Task.Delay(10000);
-                await msg.DeleteAsync();
-                await sentMsg.DeleteAsync();
-                await sentMsgDM.DeleteAsync();
-            });
+            await msg.Channel.SendMessageAsync("command triggered");
         }
     }
 
@@ -132,10 +119,10 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
 
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.AddField("1/6 Bullets in the chamber", ";;roulette_1");
@@ -150,6 +137,7 @@ namespace Crux.Commands
                 await msg.DeleteAsync();
                 await sentMsg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -163,9 +151,9 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 var randomObject = new Random();
 
@@ -191,6 +179,7 @@ namespace Crux.Commands
                 await sentMsg1.DeleteAsync();
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -204,9 +193,9 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 var randomObject = new Random();
 
@@ -236,6 +225,7 @@ namespace Crux.Commands
                 await sentMsg1.DeleteAsync();
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -249,9 +239,9 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 var randomObject = new Random();
 
@@ -285,6 +275,7 @@ namespace Crux.Commands
                 await sentMsg1.DeleteAsync();
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -298,9 +289,9 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () => 
+            Task.Run(async () =>
             {
                 var randomObject = new Random();
 
@@ -330,6 +321,7 @@ namespace Crux.Commands
                 await sentMsg1.DeleteAsync();
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -343,9 +335,9 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 var randomObject = new Random();
 
@@ -371,6 +363,7 @@ namespace Crux.Commands
                 await sentMsg1.DeleteAsync();
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -384,9 +377,9 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 EmbedBuilder eb = new EmbedBuilder();
 
@@ -401,6 +394,7 @@ namespace Crux.Commands
                 await msg.DeleteAsync();
                 await sentMsg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -414,10 +408,10 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
 
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 if (Program.Configuration.Instance.Registered.Contains(msg.Author.Mention))
 
@@ -429,7 +423,6 @@ namespace Crux.Commands
 
                     return;
                 }
-
                 else
                 {
                     await msg.Author.GetOrCreateDMChannelAsync();
@@ -442,6 +435,7 @@ namespace Crux.Commands
                     await msg.DeleteAsync();
                 }
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -455,9 +449,9 @@ namespace Crux.Commands
 
         public string Permission => "admin";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 await msg.Author.GetOrCreateDMChannelAsync();
                 await msg.Author.SendMessageAsync(Program.Configuration.Instance.Registered.Count > 0 ? string.Join("\n", Program.Configuration.Instance.Registered) : "No one is registered");
@@ -466,6 +460,7 @@ namespace Crux.Commands
 
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -479,10 +474,10 @@ namespace Crux.Commands
 
         public string Permission => "admin";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
 
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 Program.Configuration.Instance.Registered.Clear();
 
@@ -490,6 +485,7 @@ namespace Crux.Commands
 
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -503,9 +499,9 @@ namespace Crux.Commands
 
         public string Permission => "default";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 var msg1 = await msg.Channel.SendMessageAsync("**Why buy VIP?:**\n -You get an ingame name color\n -You get the permission to warp anywhere on the map every 30 minutes \n -You can use /heal every 3 minutes\n -You get alot of cooldowns on commands such as /i and /v \n -You get the 'Donor' discord role.");
 
@@ -514,6 +510,7 @@ namespace Crux.Commands
                 await msg1.DeleteAsync();
                 await msg.DeleteAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -545,10 +542,10 @@ namespace Crux.Commands
 
         public string Permission => "admin";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
 
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 if (parameters.Length < 2) return;
 
@@ -600,10 +597,11 @@ namespace Crux.Commands
                     }
                 }
             });
+            return Task.CompletedTask;
         }
     }
 
-    
+
 
     public class Warn : IDiscordCommand
     {
@@ -617,33 +615,33 @@ namespace Crux.Commands
 
         public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-                if (parameters.Length < 2) return;
+            if (parameters.Length < 2) return;
 
-                string targetId = msg.MentionedUsers.Count == 1 ? msg.MentionedUsers.First().Id.ToString() : parameters[0];
-                SocketGuild server = ((SocketGuildChannel)msg.Channel).Guild;
-                SocketGuildUser target = server.Users.FirstOrDefault(x => x.Id.ToString() == targetId);
+            string targetId = msg.MentionedUsers.Count == 1 ? msg.MentionedUsers.First().Id.ToString() : parameters[0];
+            SocketGuild server = ((SocketGuildChannel)msg.Channel).Guild;
+            SocketGuildUser target = server.Users.FirstOrDefault(x => x.Id.ToString() == targetId);
 
-                if (target == null)
-                {
-                    await msg.Channel.SendMessageAsync($"Correct Usage: `;;warn {Syntax}");
-                    return;
-                }
-                var dmChannel = await target.GetOrCreateDMChannelAsync();
-                var TCLog = Program.client.GetChannel(353561970038931458) as SocketTextChannel;
+            if (target == null)
+            {
+                await msg.Channel.SendMessageAsync($"Correct Usage: `;;warn {Syntax}");
+                return;
+            }
+            var dmChannel = await target.GetOrCreateDMChannelAsync();
+            var TCLog = Program.client.GetChannel(353561970038931458) as SocketTextChannel;
 
-                await dmChannel.SendMessageAsync($"You have been warned by {msg.Author.Mention}. Reason: **{String.Join(" ", parameters.Skip(1))}**");
-                await dmChannel.SendMessageAsync("This will be your first and last warning, if you do this again it will result in a ban!");
+            await dmChannel.SendMessageAsync($"You have been warned by {msg.Author.Mention}. Reason: **{String.Join(" ", parameters.Skip(1))}**");
+            await dmChannel.SendMessageAsync("This will be your first and last warning, if you do this again it will result in a ban!");
 
-                EmbedBuilder eb = new EmbedBuilder();
+            EmbedBuilder eb = new EmbedBuilder();
 
-                eb.Color = Color.DarkBlue;
+            eb.Color = Color.DarkBlue;
 
-                eb.AddField("Case:", $"{Name}");
-                eb.AddField("Target", $"{target.Mention}");
-                eb.AddField($"Moderator: ", $"{msg.Author.Mention}");
-                eb.AddField($"Reason:", $"{String.Join(" ", parameters.Skip(1))}");
+            eb.AddField("Case:", $"{Name}");
+            eb.AddField("Target", $"{target.Mention}");
+            eb.AddField($"Moderator: ", $"{msg.Author.Mention}");
+            eb.AddField($"Reason:", $"{String.Join(" ", parameters.Skip(1))}");
 
-                await TCLog.SendMessageAsync("", embed: eb);
+            await TCLog.SendMessageAsync("", embed: eb);
         }
     }
 
@@ -657,10 +655,10 @@ namespace Crux.Commands
 
         public string Permission => "admin";
 
-        public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
+        public Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
 
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 if (parameters.Length < 2) return;
 
@@ -694,6 +692,7 @@ namespace Crux.Commands
 
                 await target.KickAsync();
             });
+            return Task.CompletedTask;
         }
     }
 
@@ -729,15 +728,9 @@ namespace Crux.Commands
 
         public async Task ExecuteAsync(SocketUserMessage msg, string[] parameters)
         {
-            await Task.Run(async () =>
-            {
-                await msg.Channel.SendMessageAsync("**Shutting Down...**");
-                await Program.client.StopAsync();
-                Program.cancelSrc.Cancel();
-                {
-
-                }
-            });
+            await msg.Channel.SendMessageAsync("**Shutting Down...**");
+            await Program.client.StopAsync();
+            Program.cancelSrc.Cancel();
         }
     }
 }

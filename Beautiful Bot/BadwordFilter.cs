@@ -6,42 +6,29 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Beautiful_Bot;
-using Crux.Config;
 
 namespace BadWordFilter
 {
     public class BadwordFilter
     {
-        internal static async Task OnChat(SocketMessage arg)
+        internal static List<string> badWords = new List<string> { };
+        internal static Task OnChat(SocketMessage arg)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
-                if (arg is SocketUserMessage msg)
+                if (arg is SocketUserMessage msg && msg.Author.Id != Program.client.CurrentUser.Id)
                 {
-                    var BannedWords = new List<string> { "test", "nigga", "", ""};
-
-                    var message = msg.Content;
-
-                    foreach (var badWord in BannedWords)
+                    var message = msg.Content.ToLower();
+                    if (badWords.Any(x => message.Contains(x)))
                     {
-
-                        if (message.ToLower().Contains(badWord))
-                        {
-                            await msg.DeleteAsync();
-
-                            await msg.Channel.SendMessageAsync($"{msg.Author.Mention}, watch your language!!");
-
-                            var msg1 = await msg.Channel.SendMessageAsync($";;warn {msg.Author.Mention} Using bad words");
-
-                            await msg1.DeleteAsync();
-
-                            break;
-                        }
-                        break;
+                        await msg.Channel.SendMessageAsync($"{msg.Author.Mention}, watch your language!!");
+                        var msg1 = await msg.Channel.SendMessageAsync($"warn {msg.Author.Mention} Using bad words");
+                        await msg.DeleteAsync();
+                        await msg1.DeleteAsync();
                     }
                 }
             });
-            
+            return Task.CompletedTask;
         }
     }
 }
